@@ -5,10 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/css/pico.min.css">
     <link rel="stylesheet" href="/static/css/custom.css">
-    <title>Hello, world!</title>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <title>My Shipping</title>
   </head>
   <body>
-	  {% block content %}
-	  {% endblock %}
+    <div class="container">
+      {% if current_user.is_authenticated %}
+      <nav>
+        <ul>
+          <li><a href="/">My Shipping</a></li>
+        </ul>
+        <ul>
+          <li><a href="/shipment/add" class="contrast"><i data-feather="file-plus" style="margin-right:0.3rem"></i>New Shipment Order</a></strong></li>
+          <li>
+            <details role="list">
+              <summary aria-haspopup="listbox" role="link" class="contrast"><i data-feather="truck" style="margin-right:.6rem"></i>Shipment</summary>
+              <ul role="listbox">
+                <li><a href="/shipment"><i data-feather="send" style="margin-right:0.6rem"></i>OTW</a></li>
+                <li><a href="/shipment?s=completed"><i data-feather="check-square" style="margin-right:0.6rem"></i>Completed</a></li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details role="list">
+              <summary aria-haspopup="listbox" role="link"><i data-feather="user" style="margin-right:.6rem"></i> {{ current_user.username }}</summary>
+              <ul role="listbox">
+                <li><a href="#"><i data-feather="award" style="margin-right:0.6rem"></i> Profile</a></li>
+                <li><hr></li>
+                <li><a href="/logout"><i data-feather="log-out" style="margin-right:0.6rem"></i>Logout</a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </nav>
+      {% block content %}
+      {% endblock %}
+        {% else %}
+      <h1>My Shipping</h1>
+      <p><a href="/login">Login</a></p>
+      {% endif %}
+    </div>
+    <footer class="container" style="border-top: solid 1px #000"><small>Hak Cipta &copy; 2023 Kirana Karya Makmur</small></footer>
+      <script>
+        feather.replace();
+      </script>
   </body>
 </html>

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>New Shipment</h1>
+<form action="/shipment/add" method="POST">
+  <div class="grid">
+    <div>
+      <div class="grid">
+        <label for="to_name">
+          <strong>To</strong> Name
+          <input type="text" id="to_name" name="to_name" placeholder="Name" required>
+        </label>
+    
+        <label for="to_hp">
+          <strong>To</strong> HP
+          <input type="text" id="to_hp" name="to_hp" placeholder="081..." required>
+        </label>
+
+      </div>
+        <label for="to_addr1">
+          <strong>To</strong> Addr1
+          <input type="text" id="to_addr1" name="to_addr1" placeholder="Jl. ..." required>
+        </label>
+    
+        <label for="to_addr2">
+          <strong>To</strong> Addr2
+          <input type="text" id="to_addr2" name="to_addr2" placeholder="...">
+        </label>
+        <label for="to_city">
+          <strong>To</strong> City
+          <input type="text" id="to_city" name="to_city" placeholder="..." required>
+        </label>    
+  </div>
+    <div>
+      <div class="grid">
+        <label for="from_name">
+          <strong>From</strong> Name
+          <input type="text" id="from_name" name="from_name" placeholder="Name" required>
+        </label>
+    
+        <label for="from_hp">
+          <strong>From</strong> HP
+          <input type="text" id="from_hp" name="from_hp" placeholder="081..." required>
+        </label>
+      </div>
+    </div>  
+  </div>
+
+  <div class="grid">
+    <input role="button" type="submit" value="Submit">
+    <p></p>
+    <p></p>
+    <p></p>
+  </div>
+ 
+</form>
+{% endblock %}

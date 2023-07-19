@@ -34,4 +34,6 @@
   --form-element-focus-color: var(--primary-focus);
   --switch-color: var(--primary-inverse);
   --switch-checked-background-color: var(--primary);
+  --form-element-spacing-vertical: 0.2rem;
+  --form-element-spacing-horizontal: 0.4rem;
 }
