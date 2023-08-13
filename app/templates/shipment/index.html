@@ -7,39 +7,20 @@
       <th scope="col">#</th>
       <th scope="col">AWB</th>
       <th scope="col">To City</th>
-      <th scope="col">Order Date</th>
+      <th scope="col">ETA</th>
       <th scope="col">Status</th>
     </tr>
   </thead>
   <tbody>
+    {% for s in shipments %}
     <tr>
-      <td>1</td>
-      <td style="font-family:'Courier New', Courier, monospace">KKM7954685283156</td>
-      <td>Denpasar (DPS)</td>
-      <td>2023-07-18</td>
+      <td>{{ s.id }}</td>
+      <td style="font-family:'Courier New', Courier, monospace"><a href="{{ url_for('shipment.show', awb=s.awb) }}">{{ s.awb }}</a></td>
+      <td>{{ s.to_city }}</td>
+      <td>{{ s.eta }}</td>
       <td>On Track</td>
     </tr>
-    <tr>
-      <td>2</td>
-      <td style="font-family:'Courier New', Courier, monospace">KKM1141943897198</td>
-      <td>Surabaya (SUB)</td>
-      <td>2023-07-18</td>
-      <td>On Track</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td style="font-family:'Courier New', Courier, monospace">KKM6358796191362</td>
-      <td>Makassar (UPG)</td>
-      <td>2023-07-18</td>
-      <td>On Track</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td style="font-family:'Courier New', Courier, monospace">KKM9699416594857</td>
-      <td>Denpasar (DPS)</td>
-      <td>2023-07-18</td>
-      <td>On Track</td>
-    </tr>
+    {% endfor %}
   </tbody>
 </table>
 {% endblock %}

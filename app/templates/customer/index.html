@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid">
+  <hgroup>
+    <h1>Customer</h1>
+  <p>Berlaku sebagai Pengirim maupun Penerima</p>
+  </hgroup>
+  <div>
+    <a href="/customer/add" role="button" class="outline"><i class="bi bi-plus-circle"></i> Tambah</a>
+    <p>&nbsp;</p>
+  </div>
+  
+</div>
+<table role="grid">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Addr</th>
+      <th scope="col">PIC</th>
+      <th scope="col"># Order</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in customer %}  
+    <tr>
+      <td></td>
+      <td><a href="{{ url_for('customer.show', id=c.id) }}">{{ c.name }}</a></td>
+      <td>{{ c.addr1 }}</td>
+      <td>{{ c.pic_name }} ( {{ c.pic_hp }})</td>
+      <td>0</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="5">Kosong</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

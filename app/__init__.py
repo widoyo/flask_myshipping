@@ -39,9 +39,11 @@ def create_app():
     
     from .user import bp as bp_user
     from .shipment import bp as bp_shipment
+    from .customer import bp as bp_customer
     
     app.register_blueprint(bp_user)
     app.register_blueprint(bp_shipment)
+    app.register_blueprint(bp_customer)
     
     @app.route('/login', methods=['GET', 'POST'])
     def login():
@@ -61,7 +63,7 @@ def create_app():
             
             next_page = request.args.get('next')
             if not next_page or url_parse(next_page).netloc != '':
-                next_page = '/'
+                next_page = '/shipment'
             return redirect(next_page)
         return render_template('login.html', title='Sign In', form=form)
     

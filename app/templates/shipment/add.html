@@ -1,45 +1,69 @@
 {% extends 'base.html' %}
+{% block extra_head %}
+<link
+  rel="stylesheet"
+  href="/static/css/choices.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+{% endblock %}
 {% block content %}
 <h1>New Shipment</h1>
-<form action="/shipment/add" method="POST">
+<form x-data="NewShipment()" action="/shipment/add" method="POST">
+  {{ form.csrf_token }}
+  {% if form.errors %}
+    <ul class="errors">
+    {% for error in form.errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
   <div class="grid">
     <div>
       <div class="grid">
         <label for="to_name">
           <strong>To</strong> Name
-          <input type="text" id="to_name" name="to_name" placeholder="Name" required>
+          <select @change="getCustomer($el.value)" x-model="to_name" name="to_name" id="to_name" class="js-choice">
+          </select>
         </label>
-    
+
         <label for="to_hp">
           <strong>To</strong> HP
-          <input type="text" id="to_hp" name="to_hp" placeholder="081..." required>
+          <input x-model="to_pic_hp" type="text" id="to_hp" name="to_hp" placeholder="081..." required>
         </label>
 
       </div>
         <label for="to_addr1">
           <strong>To</strong> Addr1
-          <input type="text" id="to_addr1" name="to_addr1" placeholder="Jl. ..." required>
+          <input x-model="to_addr1" type="text" id="to_addr1" name="to_addr1" placeholder="Jl. ..." required>
         </label>
     
         <label for="to_addr2">
           <strong>To</strong> Addr2
-          <input type="text" id="to_addr2" name="to_addr2" placeholder="...">
+          <input x-model="to_addr2" type="text" id="to_addr2" name="to_addr2" placeholder="...">
         </label>
         <label for="to_city">
           <strong>To</strong> City
-          <input type="text" id="to_city" name="to_city" placeholder="..." required>
+          <input x-model="to_city" type="text" id="to_city" name="to_city" placeholder="..." required>
         </label>    
   </div>
     <div>
       <div class="grid">
         <label for="from_name">
           <strong>From</strong> Name
-          <input type="text" id="from_name" name="from_name" placeholder="Name" required>
+          <select name="from_name" x-model="from_name" class="js-choice2" required></select>
         </label>
     
         <label for="from_hp">
           <strong>From</strong> HP
           <input type="text" id="from_hp" name="from_hp" placeholder="081..." required>
+        </label>
+      </div>
+      <div class="grid">
+        <label for="epu">PickUp
+          <input type="date" id="epu" name="epu" value="{{ form.epu.default}}">
+        </label>
+        <label for="eta">Estimated Time Arrival
+          <input type="date" id="eta" name="eta" value="{{ form.eta.default }}">
         </label>
       </div>
     </div>  
@@ -53,4 +77,57 @@
   </div>
  
 </form>
+<script>
+  const tn = document.getElementById('id_name');
+  const choices = new Choices('.js-choice');
+  const from_choice = new Choices('.js-choice2');
+  function NewShipment() {
+    return {
+      customers: [],
+      to_name: '',
+      to_pic_hp: '',
+      to_addr1: '',
+      to_addr2: '',
+      to_city: '',
+      from_name: '',
+      searchName: false,
+      get filteredCustomer() {
+        return this.customers.filter((i) => i.name.startsWith(this.to_name))
+      },
+      openSearch() {
+        //this.to_name = ''
+        this.searchName = true
+      },
+      getCustomer(name) {
+        let c = this.customers.find((i) => i.name == name)
+        this.to_name = c.name
+        this.to_pic_hp = c.pic_hp
+        this.to_addr1 = c.addr1
+        this.to_addr2 = c.addr2
+        this.to_city = c.city
+      },
+      init() { 
+        fetch('/customer?json=1', {
+          headers: { 'Content-Type': 'application/json'}
+        }).then(res => {
+          if (! res.ok) { console.log('Error Response: ', res.status) }
+          return res.json();
+        }).then(data => {
+          this.customers = data;
+          let c = []
+          for (let i in this.customers) {
+            c.push({value: this.customers[i].name, 
+              label: this.customers[i].name + ' - ' + this.customers[i].pic_name})
+          }
+          choices.setChoices(c)
+          from_choice.setChoices(c)
+          
+        }).catch(err => {
+          console.log('Error: ', err);
+        });
+        
+      }
+    }
+  }
+</script>
 {% endblock %}

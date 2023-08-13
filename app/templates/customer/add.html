@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+<hgroup>
+  <h1>New Customer</h1>
+  <small>Customer dapat berlaku sebagai pengirim maupun penerima</small>  
+</hgroup>
+
+<form x-data="{name:'', placeholder:''}" action="/customer/add" method="POST">
+  {{ form.csrf_token }}
+  {% if form.errors %}
+    <ul class="errors">
+    {% for error in form.errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <div class="grid">
+    <div>
+      <label for="name">
+        <strong>Name</strong>
+        <input 
+          type="text" 
+          @keyup="console.log(name.length)"
+          x-model="name"
+          id="name" 
+          name="name" 
+          placeholder="Berkah Abadi, PT" 
+          required>
+        <small>Berikan nama dahulu, Title Case (huruf besar-kecil), baru PT, CV, dst</small>
+      </label>
+      <label for="addr1">
+        Addr1
+        <input type="text" id="addr1" name="addr1" placeholder="Jl. ..." required>
+      </label>
+  
+      <label for="addr2">
+        Addr2
+        <input type="text" id="addr2" name="addr2" placeholder="...">
+      </label>
+      <div class="grid">
+        <label for="city">
+        City
+        <input type="text" id="city" name="city" placeholder="..." required>
+        </label>
+        <label for="city_code">
+          City Code
+          <input type="text" id="city_code" name="city_code" placeholder="CGK" required>
+          <small>(3 huruf BESAR)</small>
+          </label>
+        </div>
+      <div class="grid">
+        <label for="pic_name">
+          <strong>PIC</strong> Name
+          <input type="text" id="pic_name" name="pic_name" placeholder="Sunarso" required>
+          <small>Contact Person</small>
+        </label>
+        <label for="pic_hp">
+          <strong>PIC</strong> HP
+          <input type="text" id="pic_hp" name="pic_hp" placeholder="081..." required>
+        </label>
+          </div>
+  </div>
+    <div>
+    </div>  
+  </div>
+
+  <div class="grid">
+    <input role="button" type="submit" value="Submit">
+    <p></p>
+    <p></p>
+    <p></p>
+  </div>
+ 
+</form>
+{% endblock %}

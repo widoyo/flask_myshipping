@@ -1,12 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/css/pico.min.css">
     <link rel="stylesheet" href="/static/css/custom.css">
-    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!--<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>-->
+    <script defer src="/static/js/alpine.js"></script>
+    <script src="/static/js/minimal-theme-switcher.js"></script>
     <title>My Shipping</title>
+    {% block extra_head %}{% endblock %}
   </head>
   <body>
     <div class="container">
@@ -16,23 +20,22 @@
           <li><a href="/">My Shipping</a></li>
         </ul>
         <ul>
-          <li><a href="/shipment/add" class="contrast"><i data-feather="file-plus" style="margin-right:0.3rem"></i>New Shipment Order</a></strong></li>
+          <li><a href="/shipment/add"><i class="bi bi-plus-circle"></i> New Shipment Order</a></strong></li>
           <li>
             <details role="list">
-              <summary aria-haspopup="listbox" role="link" class="contrast"><i data-feather="truck" style="margin-right:.6rem"></i>Shipment</summary>
+              <summary aria-haspopup="listbox" role="link" class="contrast"><i class="bi bi-truck" style="margin-right:.6rem"></i>Shipment</summary>
               <ul role="listbox">
-                <li><a href="/shipment"><i data-feather="send" style="margin-right:0.6rem"></i>OTW</a></li>
-                <li><a href="/shipment?s=completed"><i data-feather="check-square" style="margin-right:0.6rem"></i>Completed</a></li>
+                <li><a href="/shipment"><i class="bi bi-shuffle" style="margin-right:0.6rem"></i>Tracking</a></li>
+                <li><a href="/shipment?s=completed"><i class="bi bi-card-checklist" style="margin-right:0.6rem"></i>Completed</a></li>
               </ul>
             </details>
           </li>
+          <li><a href="/customer"><i class="bi bi-building" style="margin-right:0.6rem"></i>Customer</a></li>
           <li>
             <details role="list">
-              <summary aria-haspopup="listbox" role="link"><i data-feather="user" style="margin-right:.6rem"></i> {{ current_user.username }}</summary>
+              <summary aria-haspopup="listbox" role="link"><i class="bi bi-person-fill" style="margin-right:.6rem"></i> {{ current_user.username }}</summary>
               <ul role="listbox">
-                <li><a href="#"><i data-feather="award" style="margin-right:0.6rem"></i> Profile</a></li>
-                <li><hr></li>
-                <li><a href="/logout"><i data-feather="log-out" style="margin-right:0.6rem"></i>Logout</a></li>
+                <li><a href="/logout"><i class="bi bi-box-arrow-right" style="margin-right:0.6rem"></i>Logout</a></li>
               </ul>
             </details>
           </li>
@@ -45,9 +48,13 @@
       <p><a href="/login">Login</a></p>
       {% endif %}
     </div>
-    <footer class="container" style="border-top: solid 1px #000"><small>Hak Cipta &copy; 2023 Kirana Karya Makmur</small></footer>
-      <script>
-        feather.replace();
-      </script>
+    <footer class="container">
+      <hgroup>
+        <hr style="border-top:solid 1px #888;padding-bottom:1rem;">
+        <small>Hak Cipta &copy; 2023 Kirana Karya Makmur</small>
+
+      </hgroup>
+    </footer>
+{% block extra_foot %}{% endblock %}
   </body>
 </html>
