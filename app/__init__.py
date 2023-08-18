@@ -40,10 +40,12 @@ def create_app():
     from .user import bp as bp_user
     from .shipment import bp as bp_shipment
     from .customer import bp as bp_customer
+    from .vendor import bp as bp_vendor
     
     app.register_blueprint(bp_user)
     app.register_blueprint(bp_shipment)
     app.register_blueprint(bp_customer)
+    app.register_blueprint(bp_vendor)
     
     @app.route('/login', methods=['GET', 'POST'])
     def login():

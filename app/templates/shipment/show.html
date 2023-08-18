@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<hgroup>
+  <h1><a href="/shipment"><i class="bi bi-arrow-left"></i></a> Shipment</h1>
+  <small> {{ shipment.awb }}</small>  
+</hgroup>
+<div class="grid">
+  <div>
+    <h2>Status</h2>
+    <div>Ubah Status
+      <form action="">
+        <select name="" id="">
+          <option value="">transit</option>
+          <option value="">selesai</option>
+        </select>
+      </form>
+    </div>
+    <div>Tracking</div>
+    {% for st in tracking %}
+    <li>{{ st.status }}</li>
+    {% endfor %}
+  </div>
+  <div>
+    <h3>Penerima</h3>
+    <div style="margin-bottom:30px">
+      <i class="bi bi-person"></i> {{ shipment.to_name }}<br>
+      <i class="bi bi-phone"></i> {{ shipment.to_hp }}<br><br>
+      {{ shipment.to_addr1 }}
+      {{ shipment.to_addr2 }}
+    </div>
+    <h3>Pengirim</h3>
+    {{ shipment.from_name }}<br>
+    <i class="bi bi-phone"></i> {{ shipment.from_hp }}
+  </div>
+
+</div>
+
+{% endblock %}

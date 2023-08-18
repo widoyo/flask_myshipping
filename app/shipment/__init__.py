@@ -2,10 +2,11 @@ import hashlib
 import time
 import datetime
 from flask import Blueprint, render_template, request, redirect
+from playhouse.flask_utils import get_object_or_404
 import flask_wtf as fw
 import wtforms as wt
 from wtforms.validators import DataRequired
-from app.models import Customer, Shipment
+from app.models import Customer, Shipment, ShipmentTrack
 
 
 bp = Blueprint('shipment', __name__, url_prefix='/shipment')
@@ -22,6 +23,11 @@ class NewShipmentForm(fw.FlaskForm):
 
     submit = wt.SubmitField('Sign In')
 
+class ShipmentStatusForm(fw.FlaskForm):
+    shipment = wt.HiddenField('Shipment')
+    timestamp = wt.DateTimeField('Jam', default=datetime.datetime.now())
+    status = wt.SelectField('Status Sekarang', choices='created_pickup_transit_arrived_received_paid'.split('_'))
+
 def get_awb_num():
     return str(int(hashlib.sha256((str(time.time()) + '!salt!').encode('utf-8')).hexdigest()[:13], 16)).zfill(16)
 
@@ -33,13 +39,18 @@ def add():
         new_shipment.awb = get_awb_num()
         new_shipment.description = ''
         new_shipment.save()
+        st = ShipmentTrack(shipment=new_shipment)
+        st.save()
         return redirect('/')
     custs = Customer.select().order_by(Customer.name)
     return render_template('shipment/add.html', form=form, customer=custs)
 
 @bp.route('/<awb>')
 def show(awb):
-    return render_template('shipment/show.html', awb=awb)
+    shipment = get_object_or_404(Shipment, Shipment.awb==awb)
+    form = ShipmentStatusForm(shipment=shipment)
+    track = ShipmentTrack().select().where(ShipmentTrack.shipment==shipment)
+    return render_template('shipment/show.html', shipment=shipment, track=track, form=form)
 
 @bp.route('')
 def index():

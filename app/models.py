@@ -94,3 +94,4 @@ class ShipmentTrack(BaseModel):
     shipment = pw.ForeignKeyField(Shipment)
     timestamp = pw.DateTimeField(default=datetime.datetime.now)
     vendor = pw.ForeignKeyField(Vendor)
+    status = pw.CharField(max_length=10, default='created') # 'pickup_transit_lastmile_delivery_delivered_paid'
