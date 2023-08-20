@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <hgroup>
-  <h1>New Vendor</h1>
+  <h1>Edit Vendor</h1>
   <small>Penyedia Jasa Ekspedisi</small>  
 </hgroup>
 <form x-data="{name:'', placeholder:''}" action="/vendor/add" method="POST">
@@ -19,12 +19,11 @@
         <strong>Name</strong>
         <input 
           type="text" 
-          @keyup="console.log(name.length)"
-          x-model="name"
           id="name" 
           name="name" 
           placeholder="Presti Indonesia, PT" 
-          required>
+          required
+          value="{{form.name.value}}">
         <small>Nama perusahaan, Title Case (huruf besar-kecil), baru PT, CV, dst</small>
       </label>
       <label for="address">
